@@ -1,0 +1,50 @@
+:root {
+  --clock-colour: #ef3200;
+  --clock-dimension: 20rem;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+main {
+  width: 50%;
+  margin: auto;
+}
+
+.timer-svg {
+}
+
+.timer-circle {
+  fill: none;
+  stroke: none;
+}
+
+/* The SVG path that displays the timer's progress */
+.timer-circle-elapsed {
+  stroke-width: 7px;
+  stroke: grey;
+}
+
+.clock {
+  height: var(--clock-dimension);
+  width: var(--clock-dimension);
+}
+
+#display {
+  position: relative;
+  top: calc(-1 * var(--clock-dimension));
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: var(--clock-dimension);
+  width: var(--clock-dimension);
+
+  font-size: 2rem;
+}
+
+#controls {
+  display: none;
+}
