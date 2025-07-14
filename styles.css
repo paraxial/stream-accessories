@@ -1,15 +1,16 @@
 :root {
   --clock-colour: #ef3200;
   --clock-dimension: 20rem;
+  --display-font: "Silkscreen", sans-serif;
+  --background-colour: #00ff00;
 }
 
 body {
   font-family: sans-serif;
+  background-color: var(--background-colour);
 }
 
 main {
-  width: 50%;
-  margin: auto;
 }
 
 .timer-svg {
@@ -29,6 +30,7 @@ main {
 .clock {
   height: var(--clock-dimension);
   width: var(--clock-dimension);
+  margin: auto;
 }
 
 #display {
@@ -42,7 +44,11 @@ main {
   height: var(--clock-dimension);
   width: var(--clock-dimension);
 
-  font-size: 2rem;
+  font-size: 3rem;
+  font-family: var(--display-font);
+
+  -webkit-text-stroke: 2px white;
+  paint-order: stroke fill;
 }
 
 #controls {

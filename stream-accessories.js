@@ -1,90 +1,88 @@
-/* A beautiful global that will never let us down, for certain /s */
-/* Maybe this could all be inside a closure, since I seem to otherwise
-   be passing state around like it's going out of style */
-let tickDownInterval;
+const Timer = () => {
+  let tickdownIntervalId;
 
-const hintSetup = () => {
+  const formatTime = (ms) => {
+    const time = Math.round(ms / 1000);
+    const hours = Math.floor(time / 60 / 60); // TODO: hmm, leaves remaining hours
+    const minutes = Math.floor(time / 60) - (hours * 60);
+    let seconds = time % 60;
+
+    return `${hours}:${minutes}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  const formatCircle = (currentTime, finalTime) => {
+    // TODO: use a CSS animation to drive the circle portion.
+    console.log({currentTime, finalTime})
+  }
+
+  const setDisplayMilliseconds = (ms) => {
+    const display = document.querySelector("[data-js-display]")
+    const circle = document.querySelector("[data-js-circle]")
+
+    display.innerText = formatTime(ms)
+  }
+
+  const setCountdown = (totalTime) => {
+    if(!!tickdownIntervalId) {
+      clearInterval(tickdownIntervalId);
+    }
+
+    countdown(totalTime);
+  }
+
+  const countdown = (timeSeconds) => {
+    const initialTime = Date.now();
+    const finishTime = initialTime + (timeSeconds * 1000);
+
+    setDisplayMilliseconds(finishTime - initialTime);
+    formatCircle(initialTime, finishTime);
+
+    const updateDisplay = () => {
+      const currentTime = Date.now();
+      const remainingTime = finishTime - currentTime;
+
+      if(remainingTime < 0) {
+        setDisplayMilliseconds(0);
+        clearInterval(tickdownIntervalId);
+        return
+      }
+
+      setDisplayMilliseconds(remainingTime);
+    }
+
+    tickdownIntervalId = setInterval(updateDisplay, 1000)
+  }
+
+  setDisplayMilliseconds(0);
+  return { countdown, setCountdown }
+}
+
+const initialiseListeners = ({countdown, setCountdown}) => {
   const dismiss = (target) => {
     target.remove()
   }
+
+  const countdownFormListener = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    const totalTime = (Number(data.get('hour')) * 60 * 60) + (Number(data.get('minute')) * 60) + Number(data.get('second'))
+
+    setCountdown(totalTime);
+  }
+
+  const timerForm = document.querySelector("[data-js-timer-form]")
+  timerForm.addEventListener("submit", countdownFormListener)
+
 
   const hint = document.querySelector("[data-js-hint]");
   const hintDismiss = document.querySelector("[data-js-hint] button");
   hintDismiss.addEventListener("click", (_) => { dismiss(hint)});
 }
 
-const timerSetup = () => {
-  const setTimer = (event) => {
-    event.preventDefault();
-    if(!!tickDownInterval) {
-      clearInterval(tickDownInterval)
-    }
-
-    const data = new FormData(event.target);
-    const totalTime = (Number(data.get('hour')) * 60 * 60) + (Number(data.get('minute')) * 60) + Number(data.get('second'))
-    timer(totalTime)
-  }
-
-  const timerForm = document.querySelector("[data-js-timer-form]")
-  timerForm.addEventListener("submit", setTimer)
-}
-
-const formatTime = (timeMiliseconds) => {
-  const time = Math.round(timeMiliseconds / 1000);
-  const minutes = Math.floor(time / 60);
-  let seconds = time % 60;
-
-  return `${minutes}:${seconds.toString().padStart(2, '0')}`
-}
-
-
-/* Timer! Lots yet TODO:
-  - Cancel existing timer when new timer is input
-  - Enable pause or reset
-  - Factoring here is pretty arse, have a think about it in the morning.
-*/
-const timer = (timeSeconds) => {
-  const display = document.querySelector("[data-js-display]")
-  const circle = document.querySelector("[data-js-circle]")
-  const initialTime = Date.now();
-  const finishTime = initialTime + (timeSeconds * 1000);
-
-  display.innerText = formatTime(finishTime - initialTime)
-
-  // const playing = false;
-  // const toggleState = () => { playing = !playing };
-
-  const timerControls = () => {
-    // const playPauseButton = document.querySelector("[data-js-play-pause]")
-    // const resetButton = document.querySelector("[data-js-reset]")
-
-    // playPauseButton.addEventListener("click", toggleState)
-  }
-
-
-  const updateDisplay = () => {
-    const currentTime = Date.now();
-    const remainingTime = finishTime - currentTime;
-    console.table({remainingTime, finishTime, currentTime, initialTime, timeSeconds})
-
-    if(remainingTime < 0) {
-      display.innerText = formatTime(0);
-      clearInterval(tickDownInterval)
-      return
-    }
-
-    console.log(formatTime(remainingTime))
-    display.innerText = formatTime(remainingTime);
-  }
-
-  tickDownInterval = setInterval(updateDisplay, 1000)
-
-  return tickDownInterval;
-}
 
 window.addEventListener("load", (event) => {
   console.log("ready");
-  hintSetup();
-  timerSetup();
-})
 
+  const { countdown, setCountdown } = Timer();
+  initialiseListeners({countdown, setCountdown});
+})

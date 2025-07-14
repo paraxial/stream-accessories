@@ -5,6 +5,9 @@
     <title>⏲️ Stream Accessories 💎</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="stream-accessories.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body>
     <details data-js-hint>
@@ -16,25 +19,25 @@
         Alternatively, set the background colour from the menu at the bottom and use a chromakey filter to lay this on top of your stream.
       </p>
     </details>
-    <details open>
-      <summary>Clock controls</summary>
-      <form action="#" data-js-timer-form>
-        <label>
-          Hour
-          <input type="number" name="hour" />
-        </label>
-        <label>
-          Minute
-          <input type="number" name="minute" />
-        </label>
-        <label>
-          Second
-          <input type="number" name="second" />
-        </label>
-        <button type="submit">Go</button>
-      </form>
-    </details>
     <main>
+      <details open>
+        <summary>Clock controls</summary>
+        <form action="#" data-js-timer-form>
+          <label>
+            Hour
+            <input type="number" name="hour" />
+          </label>
+          <label>
+            Minute
+            <input type="number" name="minute" />
+          </label>
+          <label>
+            Second
+            <input type="number" name="second" />
+          </label>
+          <button type="submit">Go</button>
+        </form>
+      </details>
       <section class="clock">
         <svg data-js-circle class="timer-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <g class="timer-circle">
