@@ -14,6 +14,8 @@ main {
 }
 
 .timer-svg {
+  /* Make timer look anticlockwise */
+  transform: scaleX(-1);
 }
 
 .timer-circle {
@@ -22,15 +24,26 @@ main {
 }
 
 /* The SVG path that displays the timer's progress */
-.timer-circle-elapsed {
-  stroke-width: 7px;
+#timer-circle-base {
+  stroke-width: 8px;
   stroke: grey;
+}
+
+#timer-indicator-ring {
+  stroke-width: 8px;
+  stroke-linecap: unset;
+
+  transform-origin: center;
+  transition: 1s linear all;
+
+  stroke: black;
 }
 
 .clock {
   height: var(--clock-dimension);
   width: var(--clock-dimension);
-  margin: auto;
+  max-width: 100%;
+  margin: 3rem auto;
 }
 
 #display {
@@ -43,6 +56,7 @@ main {
 
   height: var(--clock-dimension);
   width: var(--clock-dimension);
+  max-width: 100%;
 
   font-size: 3rem;
   font-family: var(--display-font);
