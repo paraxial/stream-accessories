@@ -119,6 +119,8 @@ main {
 }
 
 #display {
+  color: var(--primary-colour);
+
   position: relative;
   top: calc(-1 * var(--clock-dimension));
 

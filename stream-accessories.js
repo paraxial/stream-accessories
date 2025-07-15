@@ -84,7 +84,6 @@ const UIControls = () => {
   });
   const currentValues = {};
   const appearanceFormNode = document.querySelector("[data-js-ui-form]");
-  const appearanceFormData = new FormData(appearanceFormNode);
 
   const setStore = (values) => {
     window.localStorage.setItem(key, JSON.stringify(values));
@@ -103,6 +102,12 @@ const UIControls = () => {
     }
   };
 
+  const renderSync = () => {
+    Object.entries(currentValues).forEach(([property, value]) => {
+      document.documentElement.style.setProperty(property, value);
+    })
+  }
+
   const setup = () => {
     if(!getStore()) {
       currentValues = defaultValues();
@@ -117,10 +122,27 @@ const UIControls = () => {
 
       input.value = v;
     });
+    renderSync();
+  }
+
+  const handleForm = (e) => {
+    e.preventDefault();
+    const appearanceFormData = new FormData(appearanceFormNode);
+
+    Object.keys(currentValues).forEach((k) => {
+      const newValue = appearanceFormData.get(k)
+
+      if(!newValue) { return }
+
+      currentValues[k] = newValue;
+    });
+
+    setStore(currentValues);
+    renderSync();
   }
 
   setup();
-
+  appearanceFormNode.addEventListener("submit", handleForm);
 }
 
 const initialiseListeners = ({countdown, setCountdown}) => {
