@@ -112,12 +112,17 @@ main {
   stroke: var(--secondary-colour);
 }
 
+@keyframes countdown {
+  0% { stroke-dasharray: 283 283 }
+  100% { stroke-dasharray: 0 283 }
+}
+
 #timer-indicator-ring {
   stroke-width: 8px;
   stroke-linecap: unset;
 
   transform-origin: center;
-  transition: 1s linear all;
+  animation: countdown linear forwards;
 
   stroke: var(--primary-colour);
 }

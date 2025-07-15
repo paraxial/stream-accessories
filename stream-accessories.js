@@ -19,12 +19,15 @@ const Timer = () => {
     return [hours, minutes.toString().padStart(2, "0"), seconds.toString().padStart(2,"0")].filter((e) => (!!e)).join(":");
   }
 
-  const formatCircle = (remainingTime, totalTime) => {
-    const fullArc = 283; // This is the perimeter of a circle of radius 45px;
-    const percentRemaining = (remainingTime / totalTime) * fullArc;
-    document
-      .querySelector("[data-js-timer-indicator]")
-      .setAttribute("stroke-dasharray", [percentRemaining, fullArc].join(" "))
+  const formatCircle = (totalTime) => {
+    const circle = document.querySelector("[data-js-timer-indicator]")
+    // const fullArc = 283; // This is the perimeter of a circle of radius 45px;
+    // const percentRemaining = (remainingTime / totalTime) * fullArc;
+
+    circle.style.animationDuration = `${totalTime}s`;
+    circle.style.animationPlayState = "running";
+    circle.style.animationCount = 1;
+    // circle.setAttribute("stroke-dasharray", [percentRemaining, fullArc].join(" "))
   }
 
   const setDisplayMilliseconds = (ms) => {
@@ -48,7 +51,7 @@ const Timer = () => {
     const finishTime = initialTime + (totalTimeMilliseconds);
 
     setDisplayMilliseconds(finishTime - initialTime);
-    formatCircle(initialTime, finishTime);
+    formatCircle(totalTime);
 
     const updateDisplay = () => {
       const currentTime = Date.now();
@@ -56,14 +59,14 @@ const Timer = () => {
 
       if(remainingTime < 0) {
         setDisplayMilliseconds(0);
-        formatCircle(0, 1);
+        formatCircle(0);
         // TODO: how to handle the above cleanup
         clearInterval(tickdownIntervalId);
         return
       }
 
       setDisplayMilliseconds(remainingTime);
-      formatCircle(remainingTime, totalTimeMilliseconds);
+      // formatCircle(remainingTime, totalTimeMilliseconds);
     }
 
     tickdownIntervalId = setInterval(updateDisplay, 1000)
