@@ -36,6 +36,7 @@
 
       <details id="controls-panel" open>
         <summary><img width="10px" src="./assets/menu-icon.svg" /></summary>
+        <h2>Timer controls</h2>
         <form action="#" id="timer-form" data-js-timer-form>
           <label>
             Hour
@@ -51,6 +52,27 @@
           </label>
           <button type="reset">Stop</button>
           <button type="submit">Start</button>
+        </form>
+        <hr />
+        <h2>Appearance</h2>
+        <form action="#" id="ui-form" data-js-ui-form>
+          <label>
+            Background
+            <input type="color" name="--background-colour" />
+          </label>
+          <label>
+            Primary
+            <input type="color" name="--primary-colour" />
+          </label>
+          <label>
+            Secondary
+            <input type="color" name="--secondary-colour" />
+          </label>
+          <label>
+            Stroke
+            <input type="color" name="--stroke-colour" />
+          </label>
+          <button type="submit">Save</button>
         </form>
 
         <aside data-js-hint>

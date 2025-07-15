@@ -12,6 +12,7 @@ html, body {
   --clock-colour: #ef3200;
   --clock-dimension: 20rem;
   --ui-colour: rgb(222, 222, 230);
+  --ui-secondary-colour: rgb(230, 230, 255);
 
   --display-font: "Silkscreen", sans-serif;
   --background-colour: #00ff00;
@@ -47,11 +48,26 @@ main {
   width: 100%;
 }
 
+#ui-form {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+
+  label {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--ui-secondary-colour);
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+}
+
 .clock {
   height: var(--clock-dimension);
   width: var(--clock-dimension);
   max-width: 100%;
   margin: 3rem auto;
+  padding: 1rem;
 }
 
 #timer-form {
@@ -70,7 +86,6 @@ main {
     grid-column: auto / span 3;
   }
 }
-
 
 .timer-svg {
   /* Make timer look anticlockwise */

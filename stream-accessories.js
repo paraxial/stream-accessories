@@ -1,7 +1,7 @@
 /*
  * Loosely based upon a tutorial by Mateusz Rybczonek, published on
  * https://css-tricks.com/how-to-create-an-animated-countdown-timer-with-html-css-and-javascript/
- * 
+ *
  * I believe that this implementation is *slightly* more time accurate, as setInterval
  * can slip by a few milliseconds, while I *believe* that Date.now() is correct.
  * I *think* but am not sure that this means these countdowns are correct even when the tab
@@ -20,8 +20,7 @@ const Timer = () => {
   }
 
   const formatCircle = (remainingTime, totalTime) => {
-    const fullArc = 283; // This is the arc of a circle of radius 45px;
-    console.table({remainingTime, totalTime})
+    const fullArc = 283; // This is the perimeter of a circle of radius 45px;
     const percentRemaining = (remainingTime / totalTime) * fullArc;
     document
       .querySelector("[data-js-timer-indicator]")
@@ -74,6 +73,56 @@ const Timer = () => {
   return { countdown, setCountdown }
 }
 
+const UIControls = () => {
+  const key = "accessory-ui-values"
+  const defaultValues = () => ({
+    "--display-font": "Silkscreen",
+    "--background-colour": "#00ff00",
+    "--primary-colour": "#000000",
+    "--secondary-colour": "#dedede",
+    "--stroke-colour": "#ffffff"
+  });
+  const currentValues = {};
+  const appearanceFormNode = document.querySelector("[data-js-ui-form]");
+  const appearanceFormData = new FormData(appearanceFormNode);
+
+  const setStore = (values) => {
+    window.localStorage.setItem(key, JSON.stringify(values));
+  };
+
+  /*
+   * TODO: This method is potentially dangerously lossy despite being a getter.
+   *       Determine an alternate safe get?
+   */
+  const getStore = () => {
+    try {
+      return JSON.parse(window.localStorage.getItem(key));
+    } catch (SyntaxError) {
+      console.error(`Stored values were corrupt: ${getStore()}. Returning defaultObject.`)
+      return defaultValues();
+    }
+  };
+
+  const setup = () => {
+    if(!getStore()) {
+      currentValues = defaultValues();
+      setStore(defaultValues());
+    }
+
+    // getStore is async, right? How does this work.
+    Object.assign(currentValues, getStore());
+    Object.entries(currentValues).forEach(([k, v]) => {
+      const input = appearanceFormNode.querySelector(`[name="${k}"]`);
+      if(!input) { return }
+
+      input.value = v;
+    });
+  }
+
+  setup();
+
+}
+
 const initialiseListeners = ({countdown, setCountdown}) => {
   const dismiss = (target) => {
     target.remove()
@@ -100,6 +149,7 @@ const initialiseListeners = ({countdown, setCountdown}) => {
 window.addEventListener("load", (event) => {
   console.log("ready");
 
+  UIControls();
   const { countdown, setCountdown } = Timer();
   initialiseListeners({countdown, setCountdown});
 })
