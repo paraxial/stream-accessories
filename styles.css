@@ -1,8 +1,13 @@
 :root {
   --clock-colour: #ef3200;
   --clock-dimension: 20rem;
+  --ui-colour: rgb(222, 222, 230);
+
   --display-font: "Silkscreen", sans-serif;
   --background-colour: #00ff00;
+  --primary-colour: black;
+  --secondary-colour: rgb(222, 222, 222);
+  --stroke-colour: white;
 }
 
 body {
@@ -23,10 +28,15 @@ main {
   stroke: none;
 }
 
+#timer-circle-stroke {
+  stroke-width: 10px;
+  stroke: var(--stroke-colour);
+}
+
 /* The SVG path that displays the timer's progress */
 #timer-circle-base {
   stroke-width: 8px;
-  stroke: grey;
+  stroke: var(--secondary-colour);
 }
 
 #timer-indicator-ring {
@@ -36,7 +46,7 @@ main {
   transform-origin: center;
   transition: 1s linear all;
 
-  stroke: black;
+  stroke: var(--primary-colour);
 }
 
 .clock {
@@ -61,10 +71,6 @@ main {
   font-size: 3rem;
   font-family: var(--display-font);
 
-  -webkit-text-stroke: 5px white;
+  -webkit-text-stroke: 5px var(--stroke-colour);
   paint-order: stroke fill;
-}
-
-#controls {
-  display: none;
 }

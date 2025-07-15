@@ -42,6 +42,7 @@
         <svg data-js-circle class="timer-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <g class="timer-circle">
             <!-- Note well that stroke-dasharray is based on the radius of 45-->
+            <circle id="timer-circle-stroke" cx="50" cy="50" r="45" />
             <circle id="timer-circle-base" cx="50" cy="50" r="45" />
             <path
               id="timer-indicator-ring"
@@ -58,11 +59,6 @@
         </svg>
         <span id="display" data-js-display>
         </span>
-
-        <div id="controls">
-          <button data-js-play-pause>⏯️</button>
-          <button data-js-reset>⏹️</button>
-        </div>
       </section>
     </main>
   </body>
