@@ -1,3 +1,13 @@
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0
+}
+
+* {
+  box-sizing: border-box;
+}
+
 :root {
   --clock-colour: #ef3200;
   --clock-dimension: 20rem;
@@ -16,7 +26,51 @@ body {
 }
 
 main {
+  display: grid;
+  grid-template-columns: 1fr 15cm;
+  height: 100%;
 }
+
+#controls-panel {
+  background-color: var(--ui-colour);
+  padding: 1rem;
+  height: 4rem;
+  width: 4rem;
+
+  justify-self: end;
+
+  transition: 200ms all;
+}
+
+#controls-panel:open {
+  height: 100%;
+  width: 100%;
+}
+
+.clock {
+  height: var(--clock-dimension);
+  width: var(--clock-dimension);
+  max-width: 100%;
+  margin: 3rem auto;
+}
+
+#timer-form {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: 1fr 1fr;
+
+  label {
+    grid-row: 1;
+    grid-column: auto / span 2;
+  }
+
+  button {
+    grid-row: 2;
+    grid-column: auto / span 3;
+  }
+}
+
 
 .timer-svg {
   /* Make timer look anticlockwise */
@@ -49,13 +103,6 @@ main {
   stroke: var(--primary-colour);
 }
 
-.clock {
-  height: var(--clock-dimension);
-  width: var(--clock-dimension);
-  max-width: 100%;
-  margin: 3rem auto;
-}
-
 #display {
   position: relative;
   top: calc(-1 * var(--clock-dimension));
@@ -73,4 +120,8 @@ main {
 
   -webkit-text-stroke: 5px var(--stroke-colour);
   paint-order: stroke fill;
+}
+
+aside {
+  display: none;
 }

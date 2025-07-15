@@ -10,34 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <details data-js-hint>
-      <summary>What is this? <button>Click to dismiss</button></summary>
-      <p>
-        This site provides little stream utilities, like timers and lists, that can be included as an OBS browser source.
-      </p>
-      <p>
-        Alternatively, set the background colour from the menu at the bottom and use a chromakey filter to lay this on top of your stream.
-      </p>
-    </details>
     <main>
-      <details open>
-        <summary>Clock controls</summary>
-        <form action="#" data-js-timer-form>
-          <label>
-            Hour
-            <input type="number" name="hour" />
-          </label>
-          <label>
-            Minute
-            <input type="number" name="minute" />
-          </label>
-          <label>
-            Second
-            <input type="number" name="second" />
-          </label>
-          <button type="submit">Go</button>
-        </form>
-      </details>
       <section class="clock">
         <svg data-js-circle class="timer-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <g class="timer-circle">
@@ -60,6 +33,33 @@
         <span id="display" data-js-display>
         </span>
       </section>
+
+      <details id="controls-panel" open>
+        <summary><img width="10px" src="./assets/menu-icon.svg" /></summary>
+        <form action="#" id="timer-form" data-js-timer-form>
+          <label>
+            Hour
+            <input type="number" name="hour" />
+          </label>
+          <label>
+            Minute
+            <input type="number" name="minute" />
+          </label>
+          <label>
+            Second
+            <input type="number" name="second" />
+          </label>
+          <button type="reset">Stop</button>
+          <button type="submit">Start</button>
+        </form>
+
+        <aside data-js-hint>
+          <h3>What is this? <button>Click to dismiss</button></h3>
+          <p>
+            This site provides little stream utilities, like timers and lists, that can be included as an OBS browser source.
+          </p>
+        </aside>
+      </details>
     </main>
   </body>
 </html>

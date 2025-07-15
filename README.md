@@ -5,6 +5,7 @@ Timer Overlays you can chromakey onto a stream.
 
 ## Upcoming features:
 
+- [x] UI Refresh
 - [ ] UI colour customisation
 - [ ] Font customisation
 - [ ] Local persistence of UI customisation
