@@ -26,6 +26,7 @@ html, body {
 body {
   font-family: sans-serif;
   background-color: var(--background-colour);
+  transition: 200ms all;
 }
 
 main {
