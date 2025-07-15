@@ -61,16 +61,21 @@
             <input type="color" name="--background-colour" />
           </label>
           <label>
-            Primary
+            Timer colour
             <input type="color" name="--primary-colour" />
           </label>
           <label>
-            Secondary
+            Elapsed time colour
             <input type="color" name="--secondary-colour" />
           </label>
           <label>
             Stroke
             <input type="color" name="--stroke-colour" />
+          </label>
+          <label>
+            Timer size
+            <span data-js-dimension-label>--</span>
+            <input type="range" min="0.1" max="2" step="any" name="--dimension-multiplier" data-js-clock-dimension />
           </label>
           <button type="submit">Save</button>
         </form>

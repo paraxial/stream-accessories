@@ -80,7 +80,8 @@ const UIControls = () => {
     "--background-colour": "#00ff00",
     "--primary-colour": "#000000",
     "--secondary-colour": "#dedede",
-    "--stroke-colour": "#ffffff"
+    "--stroke-colour": "#ffffff",
+    "--dimension-multiplier": "1",
   });
   const currentValues = {};
   const appearanceFormNode = document.querySelector("[data-js-ui-form]");
@@ -122,14 +123,21 @@ const UIControls = () => {
 
       input.value = v;
     });
+
+    handleDimensionChange(currentValues["--dimension-multiplier"]);
     renderSync();
+  }
+
+  const handleDimensionChange = (value) => {
+    const label = appearanceFormNode.querySelector("[data-js-dimension-label]");
+    label.innerText = [Number(value).toFixed(2), "x"].join("");
   }
 
   const handleForm = (e) => {
     e.preventDefault();
     const appearanceFormData = new FormData(appearanceFormNode);
 
-    Object.keys(currentValues).forEach((k) => {
+    Object.keys(defaultValues()).forEach((k) => {
       const newValue = appearanceFormData.get(k)
 
       if(!newValue) { return }
@@ -137,11 +145,14 @@ const UIControls = () => {
       currentValues[k] = newValue;
     });
 
-    setStore(currentValues);
     renderSync();
+    setStore(currentValues);
   }
 
   setup();
+  appearanceFormNode
+    .querySelector("[data-js-clock-dimension]")
+    .addEventListener("input", (e) => handleDimensionChange(e.target.value))
   appearanceFormNode.addEventListener("submit", handleForm);
 }
 

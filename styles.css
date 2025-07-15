@@ -10,9 +10,11 @@ html, body {
 
 :root {
   --clock-colour: #ef3200;
-  --clock-dimension: 20rem;
   --ui-colour: rgb(222, 222, 230);
   --ui-secondary-colour: rgb(230, 230, 255);
+
+  --dimension-multiplier: 1;
+  --clock-dimension: calc(var(--dimension-multiplier) * 20rem);
 
   --display-font: "Silkscreen", sans-serif;
   --background-colour: #00ff00;
@@ -66,8 +68,9 @@ main {
   height: var(--clock-dimension);
   width: var(--clock-dimension);
   max-width: 100%;
-  margin: 3rem auto;
+  margin: calc(var(--dimension-multiplier) * 15vh) auto;
   padding: 1rem;
+  transform: scale(var(--dimension-multiplier));
 }
 
 #timer-form {
@@ -132,7 +135,7 @@ main {
   width: var(--clock-dimension);
   max-width: 100%;
 
-  font-size: 3rem;
+  font-size: calc(var(--dimension-multiplier) * 3rem);
   font-family: var(--display-font);
 
   -webkit-text-stroke: 5px var(--stroke-colour);
