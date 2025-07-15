@@ -110,7 +110,7 @@ const UIControls = () => {
 
   const setup = () => {
     if(!getStore()) {
-      currentValues = defaultValues();
+      Object.assign(currentValues, defaultValues());
       setStore(defaultValues());
     }
 
