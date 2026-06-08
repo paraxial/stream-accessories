@@ -83,40 +83,49 @@ const UIControls = () => {
     "--stroke-colour": "#ffffff",
     "--dimension-multiplier": "1",
   });
+  const uiParameterKeys = Object.keys(defaultValues());
   const currentValues = {};
   const appearanceFormNode = document.querySelector("[data-js-ui-form]");
-
-  const setStore = (values) => {
-    window.localStorage.setItem(key, JSON.stringify(values));
-  };
-
-  /*
-   * TODO: This method is potentially dangerously lossy despite being a getter.
-   *       Determine an alternate safe get?
-   */
-  const getStore = () => {
-    try {
-      return JSON.parse(window.localStorage.getItem(key));
-    } catch (SyntaxError) {
-      console.error(`Stored values were corrupt: ${getStore()}. Returning defaultObject.`)
-      return defaultValues();
-    }
-  };
 
   const renderSync = () => {
     Object.entries(currentValues).forEach(([property, value]) => {
       document.documentElement.style.setProperty(property, value);
-    })
+   })
   }
 
+  const setParams = () => {
+    // TODO:(paraxial) Monstrous.  Shall I set the parameters from JS?
+  };
+
+  const getParams = () => {
+    params = new URLSearchParams(document.location.search);
+    const baseParams = defaultValues(); 
+
+    const camelise = (key) => {
+      return key.replace('--', '').replace(/-+./g, result => result[1].toUpperCase());
+    };
+
+    uiParameterKeys.forEach((key) => {
+      const fromQueryString = params.get(camelise(key));
+      if (fromQueryString && key.endsWith("colour")) {
+        baseParams[key] = `#${fromQueryString}`;
+        return;
+      }
+
+      baseParams[key] = params.get(camelise(key)) || baseParams[key];
+    });
+
+    console.debug(baseParams);
+    return baseParams;
+  };
+
   const setup = () => {
-    if(!getStore()) {
+    if(!getParams()) {
       Object.assign(currentValues, defaultValues());
-      setStore(defaultValues());
     }
 
     // getStore is async, right? How does this work.
-    Object.assign(currentValues, getStore());
+    Object.assign(currentValues, getParams());
     Object.entries(currentValues).forEach(([k, v]) => {
       const input = appearanceFormNode.querySelector(`[name="${k}"]`);
       if(!input) { return }
@@ -137,7 +146,7 @@ const UIControls = () => {
     e.preventDefault();
     const appearanceFormData = new FormData(appearanceFormNode);
 
-    Object.keys(defaultValues()).forEach((k) => {
+    uiParameterKeys.forEach((k) => {
       const newValue = appearanceFormData.get(k)
 
       if(!newValue) { return }
@@ -146,7 +155,6 @@ const UIControls = () => {
     });
 
     renderSync();
-    setStore(currentValues);
   }
 
   setup();
